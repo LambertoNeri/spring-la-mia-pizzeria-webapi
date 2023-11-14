@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/resources :: headResources('Edit Pizza')"></head>
+<body>
+<nav th:replace="fragments/navbar :: topNavbar('pizzas')"></nav>
+<div class="container">
+  <h1>Edit Pizza</h1>
+  <hr>
+  <form
+      id="edit-pizza"
+      method="POST"
+      th:action="@{/pizzas/edit/{id}(id=${pizza.id})}"
+      th:object="${pizza}"
+      class="row gy-2"
+  >
+    <!-- name -->
+    <div class="col-6"
+         th:insert="fragments/components :: formField('text', 'Name', 'name')"></div>
+    <!-- pic -->
+    <div class="col-6" th:insert="fragments/components :: formField('text', 'Pic', 'pic')">
+    </div>
+    <!-- descrtiption -->
+    <div class="col-6"
+         th:insert="fragments/components :: formField('text', 'Description', 'description')">
+    </div>
+
+    <div class="col">Price: <span th:text="*{price}"></span></div>
+
+    <!-- actions -->
+    <div class="col-12">
+      <button class="btn btn-primary" type="submit">Save</button>
+      <a th:href="@{/pizzas}" class="btn btn-primary">Cancel</a>
+    </div>
+  </form>
+</div>
+</body>
+</html>

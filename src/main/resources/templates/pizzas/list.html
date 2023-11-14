@@ -1,36 +1,44 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="fragments/resources :: headResources('Pizza List')"></head>
-  <meta charset="UTF-8">
-  <title>Pizzas List</title>
-</head>
 <body>
 <nav th:replace="fragments/navbar :: topNavbar('pizzas')"></nav>
 <div class="container">
-  <h1 class="text-center mt-5">Pizzas list</h1>
-  <form th:action="@{/pizzas}" method="GET">
-    <div class="input-group">
-      <!-- input precaricato leggendo il parametro search della request -->
-      <input
-          type="text"
-          placeholder="Search by name"
-          class="form-control" name="search"
-          th:value="${param.search}"
-      >
-      <button class="btn btn-primary" type="submit">Search</button>
-    </div>
+  <!-- message da redirectAttributes -->
+  <div th:if="${message !=null}" class="alert alert-success alert-dismissible fade show">
+    <span th:text="${message}"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <div class="d-flex align-items-center justify-content-between">
+    <h1>Pizzas List</h1>
+    <form th:action="@{/pizzas}" method="GET">
+      <div class="input-group">
+        <!-- input precaricato leggendo il parametro search della request -->
+        <input
+            type="text"
+            placeholder="Search by name"
+            class="form-control" name="search"
+            th:value="${param.search}"
+        >
+        <button class="btn btn-primary" type="submit">Search</button>
+      </div>
 
-  </form>
+    </form>
+  </div>
+
   <hr>
   <a th:href="@{/pizzas/create}" class="btn btn-primary">Add new Pizza</a>
   <table class="table">
     <thead>
     <tr class="text-center">
-      <th >Name</th>
+      <th>Name</th>
       <th>Pic</th>
       <th>Description</th>
       <th>Price</th>
-      <th>Details</th>
+      <th></th>
+      <th>Actions</th>
+      <th></th>
+
     </tr>
     </thead>
     <tbody>
@@ -40,7 +48,19 @@
       <td class="pt-4" th:text="*{description}"></td>
       <td class="pt-4" th:text="|*{price}$|"></td>
       <td class="pt-4"><a th:href="@{/pizzas/show/{id}(id=*{id})}" title="details" class="btn btn-primary"><i
-          class="fa-solid fa-book"></i></a></td>
+          class="fa-solid fa-pizza-slice"></i>
+      </a>
+      </td>
+      <td class="pt-4"><a th:href="@{/pizzas/edit/{id}(id=*{id})}" title="edit" class="btn btn-primary"><i
+          class="fa-solid fa-pen-to-square"></i></a>
+      </td>
+      <td class="pt-4">
+        <form method="POST" th:action="@{/pizzas/delete/{id}(id=*{id})}"
+              onsubmit="return confirm('Are you sure?')">
+          <button type="submit" class="btn btn-primary"><i class="fa-solid fa-trash-can"></i>
+          </button>
+        </form>
+      </td>
     </tr>
     </tbody>
   </table>
