@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "pizzas")
 public class Pizza {
@@ -26,6 +29,10 @@ public class Pizza {
   @NotNull
   @Min(value = 1, message = "Pizza's price must atleast be of 1 euro")
   private double price;
+
+  @OneToMany(mappedBy = "pizza")
+
+  private List<Deal> deals = new ArrayList<>();
 
   public Integer getId() {
     return id;
@@ -65,5 +72,13 @@ public class Pizza {
 
   public void setPrice(double price) {
     this.price = price;
+  }
+
+  public List<Deal> getDeals() {
+    return deals;
+  }
+
+  public void setDeals(List<Deal> deals) {
+    this.deals = deals;
   }
 }

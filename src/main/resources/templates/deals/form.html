@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="isEdit=${deal.id != null}">
+<head
+    th:insert="fragments/resources :: headResources(${isEdit ? 'Edit Dal' : 'Create Deal'})"></head>
+<body>
+<nav th:replace="fragments/navbar :: topNavbar('pizzas')"></nav>
+<div class="container">
+  <h1 th:text="${isEdit ? 'Edit Deal' : 'Create Deal'}"></h1>
+  <h2 class="text-muted" th:text="${deal.pizza.name}"></h2>
+  <hr>
+  <form
+      th:with="actionUrl=${isEdit ? '/deals/edit/'+deal.id : '/deals/create'}"
+      id="deal-form"
+      th:action="@{${actionUrl}}"
+      method="POST"
+      th:object="${deal}"
+      class="row"
+  >
+    <!-- hidden fields -->
+    <input type="hidden" th:field="*{pizza}">
+    <div class="col-6"
+         th:insert="fragments/components :: formField('date', 'Start Date', 'startDate')"></div>
+    <div class="col-6"
+         th:insert="fragments/components :: formField('date', 'Expire Date', 'expireDate')"></div>
+    <div class="col-12"
+         th:insert="fragments/components :: formField('text', 'Title', 'title')"></div>
+
+    <!-- actions -->
+    <div class="col-12">
+      <button class="btn btn-primary" type="submit">Save</button>
+      <a th:href="@{/pizzas/show/{pizzaId}(pizzaId=*{pizza.id})}" class="btn btn-primary">Cancel</a>
+    </div>
+  </form>
+
+</div>
+</body>
+</html>

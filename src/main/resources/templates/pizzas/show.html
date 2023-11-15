@@ -7,7 +7,7 @@
 </head>
 <body>
 <nav th:replace="fragments/navbar :: topNavbar('pizzas')"></nav>
-<div class="card mt-5 text-center" style="width: 27rem; height: 34rem;  margin-inline: auto !important;"
+<div class="card mt-5 text-center" style="width: 40rem; height: 50rem;  margin-inline: auto !important;"
      th:object="${pizza}">
   <img style="mt-5" th:src="*{pic}" class="card-img-top" alt="...">
   <div class="card-body" style="max-width: 60%; margin-inline:auto !important;">
@@ -16,7 +16,34 @@
     <p class="card-text" th:text="*{description}"></p>
     <p th:text="| Price: *{price}$|"></p>
     <a th:href="@{/pizzas}" class="btn btn-primary">Go back to pizzas list</a>
+
+    <hr>
+
+    <h5>Deals
+      <a th:href="@{/deals/create(pizzaId=*{id})}">
+        <i class="fa-solid fa-circle-plus"></i>
+      </a>
+    </h5>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Start date</th>
+        <th>Expire date</th>
+        <th>Title</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="deal : *{deals}" th:object="${deal}">
+        <td th:text="*{startDate}"></td>
+        <td th:text="*{expireDate}"></td>
+        <td th:text="*{title}"></td>
+      </tr>
+      </tbody>
+    </table>
+
   </div>
+
+
 </div>
 </body>
 </html>
