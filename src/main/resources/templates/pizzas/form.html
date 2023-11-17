@@ -38,6 +38,20 @@
       <label for="description" class="form-label">Description</label>
       <textarea class="form-control" id="description" rows="5" th:field="*{description}"></textarea>
     </div>
+    <div class="col-4">
+      <!-- ingredients -->
+      <h3>Ingredients</h3>
+      <div class="form-check" th:each="ing : ${ingredientList}">
+        <input
+            class="from-check-input"
+            type="checkbox"
+            th:value="${ing.id}"
+            th:id="|ing_${ing.id}|"
+            th:field="*{ingredients}">
+        <label class="form-check-label" th:for="|ing_${ing.id}|" th:text="${ing.name}">
+        </label>
+      </div>
+    </div>
 
     <!-- actions -->
     <div class="col-12">

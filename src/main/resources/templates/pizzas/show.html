@@ -16,9 +16,15 @@
     <p class="card-text" th:text="*{description}"></p>
     <p th:text="| Price: *{price}$|"></p>
     <a th:href="@{/pizzas}" class="btn btn-primary">Go back to pizzas list</a>
-
     <hr>
 
+    <h3>Ingredients</h3>
+    <ul th:if="*{ingredients.size() >0 }">
+      <li th:each="ingredientObj : *{ingredients}" th:text="${ingredientObj.name}"></li>
+    </ul>
+    <div th:unless="*{ingredients.size() > 0}" class="alert alert-ingo">The list is empty</div>
+
+    <hr>
     <h5>Deals
       <a th:href="@{/deals/create(pizzaId=*{id})}">
         <i class="fa-solid fa-circle-plus"></i>

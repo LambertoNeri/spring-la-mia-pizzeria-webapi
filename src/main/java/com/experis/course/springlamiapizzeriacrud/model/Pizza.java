@@ -30,10 +30,20 @@ public class Pizza {
   @Min(value = 1, message = "Pizza's price must atleast be of 1 euro")
   private double price;
 
-  @OneToMany(mappedBy = "pizza")
-
+  @OneToMany(mappedBy = "pizza", orphanRemoval = true, fetch = FetchType.LAZY)
   private List<Deal> deals = new ArrayList<>();
 
+  @ManyToMany(fetch = FetchType.LAZY)
+  private List<Ingredient> ingredients;
+
+  public List<Ingredient> getIngredients() {
+    return ingredients;
+  }
+
+  public void setIngredients(List<Ingredient> ingredients) {
+    this.ingredients = ingredients;
+  }
+  
   public Integer getId() {
     return id;
   }
