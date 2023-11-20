@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
 <head th:insert="fragments/resources :: headResources('Pizza List')"></head>
 <head>
   <meta charset="UTF-8">
@@ -17,7 +17,6 @@
     <p th:text="| Price: *{price}$|"></p>
     <a th:href="@{/pizzas}" class="btn btn-primary">Go back to pizzas list</a>
     <hr>
-
     <h3>Ingredients</h3>
     <ul th:if="*{ingredients.size() >0 }">
       <li th:each="ingredientObj : *{ingredients}" th:text="${ingredientObj.name}"></li>
@@ -25,28 +24,29 @@
     <div th:unless="*{ingredients.size() > 0}" class="alert alert-ingo">The list is empty</div>
 
     <hr>
-    <h5>Deals
-      <a th:href="@{/deals/create(pizzaId=*{id})}">
-        <i class="fa-solid fa-circle-plus"></i>
-      </a>
-    </h5>
-    <table class="table">
-      <thead>
-      <tr>
-        <th>Start date</th>
-        <th>Expire date</th>
-        <th>Title</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="deal : *{deals}" th:object="${deal}">
-        <td th:text="*{startDate}"></td>
-        <td th:text="*{expireDate}"></td>
-        <td th:text="*{title}"></td>
-      </tr>
-      </tbody>
-    </table>
-
+    <section sec:authorize="hasAuthority('ADMIN')">
+      <h5>Deals
+        <a th:href="@{/deals/create(pizzaId=*{id})}">
+          <i class="fa-solid fa-circle-plus"></i>
+        </a>
+      </h5>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Start date</th>
+          <th>Expire date</th>
+          <th>Title</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="deal : *{deals}" th:object="${deal}">
+          <td th:text="*{startDate}"></td>
+          <td th:text="*{expireDate}"></td>
+          <td th:text="*{title}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
   </div>
 
 
