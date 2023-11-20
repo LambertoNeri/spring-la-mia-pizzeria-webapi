@@ -15,9 +15,13 @@
           <a class="nav-link" th:classAppend="${area == 'pizzas' ? 'active' : ''}"
              th:href="@{/pizzas}">Pizzas List</a>
         </li>
+        <!--        <li class="nav-item">-->
+        <!--          <a class="nav-link" th:classAppend="${area == 'users' ? 'active' : ''}"-->
+        <!--             th:href="@{/users}">Users</a>-->
+        <!--        </li>-->
         <li class="nav-item">
-          <a class="nav-link" th:classAppend="${area == 'users' ? 'active' : ''}"
-             th:href="@{/users}">Users</a>
+          <a class="nav-link" th:classAppend="${area == 'ingredients' ? 'active' : ''}"
+             th:href="@{/ingredients}">Ingredients</a>
         </li>
       </ul>
 

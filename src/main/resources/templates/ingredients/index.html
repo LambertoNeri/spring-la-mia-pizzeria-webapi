@@ -4,7 +4,9 @@
 <body>
 <nav th:replace="fragments/navbar :: topNavbar('ingredients')"></nav>
 <div class="container">
-  <h1>Sono ingredienti index</h1>
+  <!-- message da RedirectAttributes -->
+  <div th:replace="fragments/components :: message"></div>
+  <h1>Ingredients</h1>
   <hr>
   <section>
     <form
@@ -23,9 +25,19 @@
     <ul class="list-group">
       <li
           th:each="ingredient : ${ingredientList}"
-          th:text="${ingredient.name}"
           class="list-group-item"
-      ></li>
+
+
+      >
+        <span th:text="${ingredient.name}"></span>
+        <form
+            th:action="@{/ingredients/delete/{id}(id=${ingredient.id})}"
+            onsubmit="return confirm('Are you sure?')"
+            method="POST"
+        >
+          <button type="submit" class="btn btn-primary"><i class="fa-solid fa-trash-can"></i></button>
+        </form>
+      </li>
     </ul>
   </section>
 </div>

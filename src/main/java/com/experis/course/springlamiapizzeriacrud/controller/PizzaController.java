@@ -2,6 +2,7 @@ package com.experis.course.springlamiapizzeriacrud.controller;
 
 import com.experis.course.springlamiapizzeriacrud.exceptions.PizzaNotFoundException;
 import com.experis.course.springlamiapizzeriacrud.model.Pizza;
+import com.experis.course.springlamiapizzeriacrud.service.IngredientService;
 import com.experis.course.springlamiapizzeriacrud.service.PizzaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class PizzaController {
   //attributi
   @Autowired
   private PizzaService pizzaService;
+
+  @Autowired
+  private IngredientService ingredientService;
 
   // metodo che mostra la lista di tutte le pizze
 
@@ -52,13 +56,15 @@ public class PizzaController {
   @GetMapping("/create")
   public String create(Model model) {
     model.addAttribute("pizza", new Pizza());
+    model.addAttribute("ingredientList", ingredientService.getAll());
     return "pizzas/form";
   }
 
   @PostMapping("/create")
   public String doCreate(@Valid @ModelAttribute("pizza") Pizza formPizza,
-                         BindingResult bindingResult) {
+                         BindingResult bindingResult, Model model) {
     if (bindingResult.hasErrors()) {
+      model.addAttribute("ingredientList", ingredientService.getAll());
       return "pizzas/form";
     }
     // salvo la pizza sul database
@@ -72,6 +78,7 @@ public class PizzaController {
     try {
       // aggiungo la pizza come attributo del Model
       model.addAttribute("pizza", pizzaService.getPizzaById(id));
+      model.addAttribute("ingredientList", ingredientService.getAll());
       // proseguo a restituire la pagina di modifica
       return "/pizzas/form";
     } catch (PizzaNotFoundException e) {
@@ -83,9 +90,10 @@ public class PizzaController {
   // metodo che riceve il submit del form di edit e salva la pizza
   @PostMapping("/edit/{id}")
   public String doEdit(@PathVariable Integer id, @Valid @ModelAttribute("pizza") Pizza formPizza,
-                       BindingResult bindingResult) {
+                       BindingResult bindingResult, Model model) {
     if (bindingResult.hasErrors()) {
       // se ci sono errori ricarico la pagina col form
+      model.addAttribute("ingredientList", ingredientService.getAll());
       return "/pizzas/form";
     }
     try {

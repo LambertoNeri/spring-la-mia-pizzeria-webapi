@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class IngredientService {
@@ -26,5 +27,20 @@ public class IngredientService {
     ingredient.setName(ingredient.getName().toLowerCase());
     // salvo su database
     return ingredientRepository.save(ingredient);
+  }
+
+  public Ingredient getIngredientById(Integer id) throws IngredientNameUniqueException {
+    Optional<Ingredient> result = ingredientRepository.findById(id);
+    if (result.isPresent()) {
+      return result.get();
+    } else {
+      throw new IngredientNameUniqueException("Ingredient with id " + id + " not found");
+    }
+  }
+
+  // metodo che elimina un ingrediente da database
+
+  public void deleteIngredient(Integer id) {
+    ingredientRepository.deleteById(id);
   }
 }
