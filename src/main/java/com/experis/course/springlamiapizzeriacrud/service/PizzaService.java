@@ -4,6 +4,8 @@ import com.experis.course.springlamiapizzeriacrud.exceptions.PizzaNotFoundExcept
 import com.experis.course.springlamiapizzeriacrud.model.Pizza;
 import com.experis.course.springlamiapizzeriacrud.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +27,10 @@ public class PizzaService {
       // pizzaRepository recupera da database la lista di tutti i libri
       return pizzaRepository.findAll();
     }
+  }
+
+  public List<Pizza> getPizzaList() {
+    return pizzaRepository.findAll();
   }
 
   // metodo che restituisce una pizza presa per id, se non la trova solleva un'eccezione
@@ -60,6 +66,11 @@ public class PizzaService {
 
   public void deletePizza(Integer id) {
     pizzaRepository.deleteById(id);
+  }
+
+  // metodo che prende in ingresso un Pageable e restituisce la Page di pizze
+  public Page<Pizza> getPage(Pageable pageable) {
+    return pizzaRepository.findAll(pageable);
   }
 
 }

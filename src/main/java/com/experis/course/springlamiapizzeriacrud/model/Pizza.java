@@ -1,5 +1,6 @@
 package com.experis.course.springlamiapizzeriacrud.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -31,6 +32,7 @@ public class Pizza {
   private double price;
 
   @OneToMany(mappedBy = "pizza", orphanRemoval = true, fetch = FetchType.LAZY)
+  @JsonIgnore
   private List<Deal> deals = new ArrayList<>();
 
   @ManyToMany(fetch = FetchType.LAZY)
@@ -43,7 +45,7 @@ public class Pizza {
   public void setIngredients(List<Ingredient> ingredients) {
     this.ingredients = ingredients;
   }
-  
+
   public Integer getId() {
     return id;
   }
