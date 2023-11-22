@@ -1,5 +1,6 @@
 package com.experis.course.springlamiapizzeriacrud.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -21,6 +22,7 @@ public class Ingredient {
   @Column(nullable = false, unique = true)
   private String name;
 
+  @JsonIgnore
   @ManyToMany(mappedBy = "ingredients")
   @OnDelete(action = OnDeleteAction.CASCADE)
   private List<Pizza> pizzas = new ArrayList<>();
